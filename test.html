@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>My HTML test</title>
+<link rel="stylesheet" type="text/css" href="test.css">
+<script src="https://maps.googleapis.com/maps/api/js?callback=myMap">
+  function showPosition(position) {
+document.write('Latitude: '+position.coords.latitude+'Longitude: '+position.coords.longitude);
+}
+
+
+
+</script>
+</head>
+<body style="background-color: grey">
+
+<h1>This is a Header 1</h1>
+<p>This is a paragraph.</p>
+<table style="width:100%">
+<h2>Table</h2>
+<table>
+  <tr>
+    <th>Firstname</th>
+    <th>Second Name</th> 
+    <th>Age</th>
+  </tr>
+  <tr>
+    <td>Kelvin</td>
+    <td>Maina</td> 
+    <td>50</td>
+  </tr>
+  <tr>
+    <td>Jude</td>
+    <td>Gitu</td> 
+    <td>94</td>
+  </tr>
+</table>
+<h2>Unordered Lists<h2>
+<ul>
+  <li>Nairobi</li>
+  <li>Mombasa</li>
+  <li>Kisumu</li>
+</ul>
+<h2> Forms<h2>
+<form>
+  First name:<br>
+  <input type="text" name="firstname"><br>
+  Last name:<br>
+  <input type="text" name="lastname">
+</form>
+<h2> Graphics<h2>
+<h3>Canvas<h3>
+<canvas id="myCanvas" width="200" height="100" style="border:1px solid #255 ;">
+Your browser does not support the HTML5 canvas tag.
+</canvas>
+<h2> Google Maps<h2>
+<div id="googleMap" style="width:600px;height:400px;"></div>
+
+<script>
+function myMap() {
+var mapProp= {
+    center:new google.maps.LatLng(51.508742,-0.120850),
+    zoom:5,
+};
+var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+}
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?callback=myMap"></script>
+
+<h2>Geolocation<h2>
+<p id="demo">Click the button to get your position.</p>
+
+<button onclick="getLocation()">Try It</button>
+
+<div id="mapholder"></div>
+
+<script>
+var x = document.getElementById("demo");
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+    } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
+function showPosition(position) {
+    var latlon = position.coords.latitude + "," + position.coords.longitude;
+
+    var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="
+    +latlon+"&zoom=14&size=400x300&sensor=false";
+    document.getElementById("mapholder").innerHTML = "<img src='"+img_url+"'>";
+}
+
+function showError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            x.innerHTML = "User denied the request for Geolocation."
+            break;
+        case error.POSITION_UNAVAILABLE:
+            x.innerHTML = "Location information is unavailable."
+            break;
+        case error.TIMEOUT:
+            x.innerHTML = "The request to get user location timed out."
+            break;
+        case error.UNKNOWN_ERROR:
+            x.innerHTML = "An unknown error occurred."
+            break;
+    }
+}
+</script>
+
+
+
+<h2>HTML5 video tag<h2>
+<video width="320" height="240" controls>
+  <source src="vid.mp4" >
+Your browser does not support the video tag.
+</video>
+<h2>Local Storage</h2>
+<script>
+function clickCounter() {
+    if(typeof(Storage) !== "undefined") {
+        if (sessionStorage.clickcount) {
+            sessionStorage.clickcount = Number(sessionStorage.clickcount)+1;
+        } else {
+            sessionStorage.clickcount = 1;
+        }
+        document.getElementById("result").innerHTML = "You have clicked the button " + sessionStorage.clickcount + " time(s) in this session.";
+    } else {
+        document.getElementById("result").innerHTML = "Sorry, your browser does not support web storage...";
+    }
+}
+</script>
+<p><button onclick="clickCounter()" type="button">Click me!</button></p>
+<div id="result"></div>
+<p>Click the button to see the counter increase.</p>
+<p>Close the browser tab (or window), and try again, and the counter is reset.</p>
+
+</body>
+</html>
